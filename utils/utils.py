@@ -34,25 +34,25 @@ def save_chunks_into_vectorstore(content_chunks, embedding_model):
     # 参考官网链接：https://python.langchain.com/docs/modules/data_connection/vectorstores/
     # ① FAISS
     # pip install faiss-gpu (如果没有GPU，那么 pip install faiss-cpu)
-    #vectorstore = FAISS.from_texts(texts=content_chunks,
-    #                                   embedding=embedding_model)
+    vectorstore = FAISS.from_texts(texts=content_chunks,
+                                      embedding=embedding_model)
 
     # ② Pinecone
     # 官网链接：https://python.langchain.com/docs/integrations/vectorstores/pinecone
     # Pinecone官网链接：https://docs.pinecone.io/docs/quickstart
     # pip install pinecone-client==2.2.2
     # 初始化
-    pinecone.init(api_key=Keys.PINECONE_KEY, environment="asia-southeast1-gcp")
-    # 创建索引
-    index_name = "pinecone-chatbot-demo"
-    # 检查索引是否存在，如果不存在，则创建
-    if index_name not in pinecone.list_indexes():
-        pinecone.create_index(name=index_name,
-                              metric="cosine",
-                              dimension=1536)
-    vectorstore = Pinecone.from_texts(texts=content_chunks,
-                                          embedding=embedding_model,
-                                          index_name=index_name)
+    # pinecone.init(api_key=Keys.PINECONE_KEY, environment="asia-southeast1-gcp")
+    # # 创建索引
+    # index_name = "pinecone-chatbot-demo"
+    # # 检查索引是否存在，如果不存在，则创建
+    # if index_name not in pinecone.list_indexes():
+    #     pinecone.create_index(name=index_name,
+    #                           metric="cosine",
+    #                           dimension=1536)
+    # vectorstore = Pinecone.from_texts(texts=content_chunks,
+    #                                       embedding=embedding_model,
+    #                                       index_name=index_name)
 
     # ③ Milvus, pip install pymilvus
     # 官网链接：https://python.langchain.com/docs/integrations/vectorstores/milvus
